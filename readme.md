@@ -1,0 +1,1 @@
+mvn -B  clean package install jdeb:jdeb -DnewVersion=2.6.1.0.0 -DskipTests -Dphon.ver="python >= 2.6" -Preplaceurl -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
