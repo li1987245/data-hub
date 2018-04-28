@@ -4,15 +4,11 @@ import cn.credit.entity.User
 import cn.credit.service.UserService
 import javax.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.data.domain.Page
-import org.springframework.stereotype.Controller
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation._
 
-@ComponentScan
-@Controller
-@ResponseBody
+@RestController
 class UserController @Autowired()(private val userService : UserService){
 
   @RequestMapping(value = Array("/list"), method = Array(RequestMethod.GET))
@@ -43,6 +39,17 @@ class UserController @Autowired()(private val userService : UserService){
   @RequestMapping(value = Array("page"), method = Array(RequestMethod.GET))
   def page(@RequestParam("page") page : Int, @RequestParam("pageSize") pageSize : Int) : Page[User] = {
     userService.page(page, pageSize)
+  }
+
+  @GetMapping(value = Array("hello"))
+  def hello(name:String):String={
+    val future = userService.getName(name)
+    println("1")
+    if(!future.isDone){
+      println("not done")
+    }
+    println("4")
+    "hello" + future.get()
   }
 
 }
