@@ -77,3 +77,7 @@ FLUSH PRIVILEGES;
 ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys 
 ```
+
+
+http://www.opencodez.com/java/quartz-scheduler-with-spring-boot.htm
+http://juliuskrah.com/tutorial/2017/09/26/dynamic-job-scheduling-with-quartz-and-spring/

@@ -5,14 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.100credit</groupId>
-    <artifactId>data-hub</artifactId>
+    <artifactId>datahub</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>datahub-web</module>
+        <module>datahub-executor</module>
     </modules>
     <packaging>pom</packaging>
 
-    <name>data-hub</name>
+    <name>datahub</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
