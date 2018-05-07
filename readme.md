@@ -1,3 +1,9 @@
+
+
+http://cloud.spring.io/spring-cloud-static/Edgware.SR3/single/spring-cloud.html
+http://www.opencodez.com/java/quartz-scheduler-with-spring-boot.htm
+http://juliuskrah.com/tutorial/2017/09/26/dynamic-job-scheduling-with-quartz-and-spring/
+
 ### ambari 安装
 #### apt源安装
 wget -O /etc/apt/sources.list.d/ambari.list http://public-repo-1.hortonworks.com/ambari/ubuntu16/2.x/updates/2.6.1.5/ambari.list
@@ -77,7 +83,3 @@ FLUSH PRIVILEGES;
 ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys 
 ```
-
-
-http://www.opencodez.com/java/quartz-scheduler-with-spring-boot.htm
-http://juliuskrah.com/tutorial/2017/09/26/dynamic-job-scheduling-with-quartz-and-spring/
