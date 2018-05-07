@@ -10,6 +10,7 @@
     <modules>
         <module>datahub-web</module>
         <module>datahub-executor</module>
+        <module>datahub-eureka</module>
     </modules>
     <packaging>pom</packaging>
 
