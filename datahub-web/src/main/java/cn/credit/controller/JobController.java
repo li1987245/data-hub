@@ -2,14 +2,13 @@ package cn.credit.controller;
 
 import cn.credit.api.JobApi;
 import cn.credit.entity.JobEntity;
-import cn.credit.entity.ReqVo;
+import cn.credit.entity.TaskVo;
 import cn.credit.entity.TriggerEntity;
 import cn.credit.jobs.SimpleJob;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -21,6 +20,7 @@ import java.util.Map;
  * @Date: 2018/4/28 14:35
  */
 @RestController
+@Slf4j
 public class JobController implements JobApi {
     @Resource
     private SimpleJob simpleJob;
@@ -30,11 +30,12 @@ public class JobController implements JobApi {
         return null;
     }
 
-    public String put(@RequestBody  ReqVo reqVo) {
-        String group = reqVo.getGroup() == null ? "default" : reqVo.getGroup();
-        String name = reqVo.getName();
+    public String put(@RequestParam("swiftNumber") String swiftNumber, @RequestBody TaskVo taskVo) {
+        log.info("swift number : {},request param : {}", swiftNumber, taskVo);
+        String group = taskVo.getGroup() == null ? "default" : taskVo.getGroup();
+        String name = taskVo.getName();
         if (StringUtils.isEmpty(name))
-            return reqVo.toString();
+            return taskVo.toString();
         Map<String, Object> data = new HashMap<String, Object>() {
             {
                 put("name", name);
