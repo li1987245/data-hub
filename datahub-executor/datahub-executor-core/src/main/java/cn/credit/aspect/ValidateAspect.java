@@ -1,7 +1,9 @@
 package cn.credit.aspect;
 
+import cn.credit.utils.Validate;
 import cn.credit.utils.ValidateChain;
 import cn.credit.annotation.ValidateMethod;
+import cn.credit.utils.ValidateResult;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 
 /**
  * @Author: jinwei.li@100credit.com
@@ -42,7 +45,11 @@ public class ValidateAspect {
         if (clazz.isAnnotationPresent(ValidateMethod.class)) {
             ValidateMethod validateMethod = (ValidateMethod) clazz.getAnnotation(ValidateMethod.class);
             String[] groups = validateMethod.group();
-            validateChain.validate()
+            Object[] objects = pjp.getArgs();
+            for (Object object : objects) {
+                ValidateResult validateResult = validateChain.validate(object, groups);
+            }
+
         }
         // start stopwatch
         Object retVal = pjp.proceed();

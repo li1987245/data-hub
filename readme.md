@@ -83,3 +83,5 @@ FLUSH PRIVILEGES;
 ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys 
 ```
+
+https://my.oschina.net/itblog/blog/211693

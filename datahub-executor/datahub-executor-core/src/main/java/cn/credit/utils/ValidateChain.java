@@ -51,8 +51,12 @@ public class ValidateChain implements ApplicationContextAware {
         //按优先级排序
         Collections.sort(validates);
         for (Validate validate : validates) {
-            ValidateResult validateResult = validate.doValidate(obj);
-            result.addResult(validateResult);
+            Class<?> cls = validate.getParam();
+            //如果param未指定或指定处理该参数
+            if (validate.getParam() == null || cls.isInstance(obj)) {
+                ValidateResult validateResult = validate.doValidate(obj);
+                result.addResult(validateResult);
+            }
         }
         return result;
     }
@@ -64,10 +68,15 @@ public class ValidateChain implements ApplicationContextAware {
         for (Object bean : beans.values()) {
             if (bean instanceof Validate) {
                 Validate validate = (Validate) bean;
+                ValidateStrategy validateStrategy = AnnotationUtils.findAnnotation(bean.getClass(), ValidateStrategy.class);
                 //获取验证策略分组
-                String group = AnnotationUtils.findAnnotation(bean.getClass(), ValidateStrategy.class).group();
+                String group = validateStrategy.group();
+                //参数
+                Class<?> param = validateStrategy.param();
                 //获取验证策略优先级
-                int priority = AnnotationUtils.findAnnotation(bean.getClass(), ValidateStrategy.class).priority();
+                int priority = validateStrategy.priority();
+                validate.setGroup(group);
+                validate.setParam(param);
                 validate.setPriority(priority);
                 //设置默认验证策略
                 if ("default".equalsIgnoreCase(group)) {

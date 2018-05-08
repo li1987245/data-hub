@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class AbstractValidate implements Validate, Comparable<Validate> {
     private int priority;
+    private String group;
+    private Class<?> param;
 
     @Override
     public ValidateResult doValidate(Object object) {

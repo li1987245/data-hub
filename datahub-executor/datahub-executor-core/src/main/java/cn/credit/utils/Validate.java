@@ -13,4 +13,12 @@ public interface Validate extends Comparable<Validate> {
     void setPriority(int priority);
 
     int getPriority();
+
+    void setGroup(String group);
+
+    String getGroup();
+
+    void setParam(Class<?> param);
+
+    Class<?> getParam();
 }
