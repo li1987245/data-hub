@@ -6,9 +6,9 @@ import javax.servlet.*;
  * @Author: jinwei.li@100credit.com
  * @Date: 2018/5/8 10:07
  */
-public interface Validate extends Comparable<Validate> {
+public interface Validate<T> extends Comparable<Validate> {
 
-    ValidateResult doValidate(Object object);
+    ValidateResult doValidate(Object obj);
 
     void setPriority(int priority);
 

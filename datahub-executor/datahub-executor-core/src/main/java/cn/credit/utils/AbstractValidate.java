@@ -9,16 +9,20 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public abstract class AbstractValidate implements Validate, Comparable<Validate> {
+public abstract class AbstractValidate<T> implements Validate<T> {
     private int priority;
     private String group;
     private Class<?> param;
 
     @Override
-    public ValidateResult doValidate(Object object) {
-
-        return null;
+    public ValidateResult doValidate(Object obj) {
+        if (obj == null)
+            return new ValidateResult(ResponseCode.ERR_SYSTEM);
+        T t = (T) obj;
+        return validate(t);
     }
+
+    protected abstract ValidateResult validate(T t);
 
 
     @Override

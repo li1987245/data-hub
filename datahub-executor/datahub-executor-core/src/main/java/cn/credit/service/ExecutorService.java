@@ -1,5 +1,6 @@
 package cn.credit.service;
 
+import cn.credit.annotation.ValidateMethod;
 import cn.credit.entity.Task;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class ExecutorService {
+    @ValidateMethod(group = {"task"})
     public void execute(Task task) {
         log.info("任务：{}", task);
     }

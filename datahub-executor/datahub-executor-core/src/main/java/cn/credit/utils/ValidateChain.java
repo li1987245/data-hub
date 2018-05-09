@@ -1,6 +1,7 @@
 package cn.credit.utils;
 
 import cn.credit.annotation.ValidateStrategy;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -14,6 +15,7 @@ import java.util.*;
  * @Author: jinwei.li@100credit.com
  * @Date: 2018/5/8 10:00
  */
+@Slf4j
 public class ValidateChain implements ApplicationContextAware {
     //默认验证策略集
     private List<Validate> defaultValidates;

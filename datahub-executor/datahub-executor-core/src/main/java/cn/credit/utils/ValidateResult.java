@@ -14,6 +14,15 @@ public class ValidateResult {
     private String message;
     private List<ValidateResult> validateResults;
 
+    public ValidateResult() {
+
+    }
+
+    public ValidateResult(ResponseCode responseCode) {
+        this.code = responseCode.getCode();
+        this.message = responseCode.getMessage();
+    }
+
     public void addResult(ValidateResult validateResult) {
         validateResults.add(validateResult);
     }
