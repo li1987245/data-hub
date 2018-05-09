@@ -9,7 +9,7 @@ import org.springframework.util.StringUtils;
  * @Author: jinwei.li@100credit.com
  * @Date: 2018/5/9 10:02
  */
-@ValidateStrategy(group = "task")
+@ValidateStrategy(group = "task", param = Task.class)
 @Component
 public class TaskValidate extends AbstractValidate<Task> {
     @Override

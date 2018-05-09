@@ -1,6 +1,7 @@
 package cn.credit;
 
 import cn.credit.config.ValidateConfig;
+import cn.credit.entity.ReqVo;
 import cn.credit.entity.Task;
 import cn.credit.service.ExecutorService;
 import org.junit.Test;
@@ -22,8 +23,9 @@ public class ValidateTest {
 
     @Test
     public void validate() {
+        ReqVo reqVo = new ReqVo();
         Task task = new Task();
         task.setName("admin");
-        executorService.execute(task);
+        executorService.execute(reqVo, task);
     }
 }
