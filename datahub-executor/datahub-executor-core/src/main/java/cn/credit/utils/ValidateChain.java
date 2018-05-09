@@ -6,6 +6,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -16,6 +17,7 @@ import java.util.*;
  * @Date: 2018/5/8 10:00
  */
 @Slf4j
+@Component
 public class ValidateChain implements ApplicationContextAware {
     //默认验证策略集
     private List<Validate> defaultValidates;
@@ -48,7 +50,9 @@ public class ValidateChain implements ApplicationContextAware {
         ValidateResult result = new ValidateResult();
         List<Validate> validates = new ArrayList<>(defaultValidates);
         for (String group : groups) {
-            validates.addAll(additionalValidateMap.get(group));
+            List<Validate> additionalValidates = additionalValidateMap.get(group);
+            if (additionalValidates != null)
+                validates.addAll(additionalValidateMap.get(group));
         }
         //按优先级排序
         Collections.sort(validates);

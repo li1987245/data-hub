@@ -17,7 +17,7 @@ public @interface ValidateStrategy {
     String value() default "";
 
     //指定规则针对哪个参数，如未指定，针对所有参数
-    Class<?> param();
+    Class<?> param() default Object.class;
 
     //数值越大优先级越高
     int priority() default 0;

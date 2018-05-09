@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class ExecutorService {
+
+    
     @ValidateMethod(group = {"task"})
     public void execute(Task task) {
         log.info("任务：{}", task);
