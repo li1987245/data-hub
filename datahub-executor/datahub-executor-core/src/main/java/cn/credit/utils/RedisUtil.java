@@ -2,6 +2,7 @@ package cn.credit.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.test.annotation.Timed;
 import redis.clients.jedis.JedisCluster;
 
 import java.util.Collections;
@@ -15,6 +16,7 @@ public class RedisUtil {
 
     private static final String LOCK_SUCCESS = "OK";
     private static final Long RELEASE_SUCCESS = 1L;
+    private static final Long LOCK_WAIT_THRESHOLD = 3000L;
     private static JedisClusterUtil jedisClusterUtil = JedisClusterUtil.getInstance();
 
     public void set(String key, String value, String typeNo) {
@@ -316,9 +318,41 @@ public class RedisUtil {
      * @param lockKey 锁的key
      * @return
      */
-    public boolean lock(String lockKey, String requestId) {
-        return lock(lockKey, requestId, 1000);
+    public void _lock(String lockKey, String requestId) {
+        long begin = System.currentTimeMillis();
+        while (System.currentTimeMillis() - begin < LOCK_WAIT_THRESHOLD) {
+            boolean acquire = lock(lockKey, requestId, 1000);
+            if (acquire)
+                return;
+            else {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        throw new RuntimeException("获取锁失败");
     }
+
+    public boolean lock(String lockKey, String requestId) {
+        long begin = System.currentTimeMillis();
+        while (System.currentTimeMillis() - begin < LOCK_WAIT_THRESHOLD) {
+            boolean acquire = lock(lockKey, requestId, 1000);
+            if (acquire)
+                return true;
+            else {
+                try {
+                    Thread.sleep(50);
+                    Thread.yield();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+
 
     public boolean lock(String lockKey, String requestId, long milliseconds) {
         JedisCluster jedis = jedisClusterUtil.getJedisCluster();

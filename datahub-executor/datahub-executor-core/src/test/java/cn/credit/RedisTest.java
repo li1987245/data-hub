@@ -42,9 +42,9 @@ public class RedisTest {
     public void testLock1() throws InterruptedException {
         RedisUtil service = new RedisUtil();
         ExecutorService executorService = Executors.newFixedThreadPool(20);
-        long total = 800;
-        service.set("shirt","800","1");
-        int size = 200;
+        long total = 8000;
+        service.set("shirt", "800", "1");
+        int size = 2000;
         CountDownLatch latch = new CountDownLatch(size);
         for (int i = 0; i < size; i++) {
             executorService.execute(new MultiRunnable(service, latch));
@@ -67,8 +67,8 @@ public class RedisTest {
         public void run() {
             String requestId = String.valueOf(System.currentTimeMillis());
             try {
-                service.lock("incrBy", requestId);
-                long total = Long.parseLong(service.get("shirt","1"));
+                service._lock("incrBy", requestId);
+                long total = Long.parseLong(service.get("shirt", "1"));
                 long minus = -10;
                 if (total + minus < 0) {
                     System.out.println("错误，当前数量" + total);
@@ -76,6 +76,10 @@ public class RedisTest {
                     return;
                 }
                 service.incrBy("shirt", "1", minus);
+            } catch (Exception e) {
+                log.error("获取锁异常", e);
+                latch.countDown();
+                return;
             } finally {
                 service.unlock("incrBy", requestId);
             }
